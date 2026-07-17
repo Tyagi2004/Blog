@@ -1,0 +1,32 @@
+ <nav class="navbar">
+
+        <div class="logo">
+            DevSphere
+        </div>
+
+        <div class="nav-links">
+            <a href="/home">Home</a>
+            <a href="/about">About</a>
+
+            <% if (typeof currentUser !== 'undefined' && currentUser) { %>
+
+                <a href="/create">Write</a>
+
+                <div class="nav-user">
+                    <div class="nav-avatar"><%= currentUser.avatar %></div>
+                    <span class="nav-username"><%= currentUser.username %></span>
+                </div>
+
+                <form action="/logout" method="POST" class="logout-form">
+                    <button type="submit" class="logout-btn">Logout</button>
+                </form>
+
+            <% } else { %>
+
+                <a href="/login">Login</a>
+                <a href="/register" class="nav-signup-btn">Sign Up</a>
+
+            <% } %>
+        </div>
+
+    </nav>

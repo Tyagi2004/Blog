@@ -1,0 +1,43 @@
+<%- include("includes/header") %>
+<%- include("includes/nav") %>
+
+<%- include("includes/flash") %>
+
+<div class="form-container">
+
+    <h1>Create New Post</h1>
+
+    <form action="/create" method="POST">
+
+        <label>Title</label>
+        <input
+            type="text"
+            name="title"
+            placeholder="Enter post title"
+            required
+        >
+
+        <label>Content</label>
+        <textarea
+            name="content"
+            rows="8"
+            placeholder="Write your post here..."
+            required
+        ></textarea>
+
+        <label>Tags (comma separated)</label>
+        <input
+            type="text"
+            name="tags"
+            placeholder="Backend, Express"
+        >
+
+        <button type="submit">
+            Publish Post
+        </button>
+
+    </form>
+
+</div>
+
+<%- include("includes/footer") %>

@@ -1,0 +1,113 @@
+<%- include("includes/header") %>
+
+
+
+<!-- Page Content -->
+
+
+
+
+<%- include("includes/nav") %>
+
+<%- include("includes/flash") %>
+
+    <section class="heading">
+
+    <h1>Stories & Ideas</h1>
+
+    <p>
+        Share knowledge, experiences and thoughts with the community.
+    </p>
+
+    <% if (typeof currentUser !== 'undefined' && currentUser) { %>
+        <a href="/create" class="create-post-btn">
+            + Create New Post
+        </a>
+    <% } else { %>
+        <a href="/login" class="create-post-btn">
+            Login to Write a Post
+        </a>
+    <% } %>
+
+</section>
+
+    <div class="posts-container">
+
+        <% if (posts.length === 0) { %>
+
+            <p class="empty-state">No posts yet. Be the first to share something!</p>
+
+        <% } %>
+
+      <% posts.forEach(post => { %>
+
+<div class="post-card">
+
+    <div class="profile">
+
+        <div class="avatar">
+            <%= post.authorAvatar %>
+        </div>
+
+        <div class="profile-info">
+            <h4><%= post.authorName %></h4>
+            <span><%= post.authorRole %></span>
+        </div>
+
+    </div>
+
+    <h2>
+        <a class="post-title-link" href="/post/<%= post._id %>"><%= post.title %></a>
+    </h2>
+
+    <p>
+        <%= post.content.length > 220 ? post.content.slice(0, 220) + "..." : post.content %>
+    </p>
+
+    <div class="tags">
+
+        <% post.tags.forEach(tag => { %>
+
+            <span>#<%= tag %></span>
+
+        <% }) %>
+
+    </div>
+
+    <div class="post-meta-row">
+
+        <form action="/post/<%= post._id %>/like" method="POST" class="like-form">
+            <button type="submit" class="like-btn <%= post.likedByMe ? 'liked' : '' %>" <%= (typeof currentUser === 'undefined' || !currentUser) ? 'disabled title="Log in to like posts"' : '' %>>
+                <%= post.likedByMe ? '♥' : '♡' %> <%= post.likeCount %>
+            </button>
+        </form>
+
+    </div>
+
+   <div class="action-buttons">
+
+    <a href="/post/<%= post._id %>" class="detail-btn">
+        View Details
+    </a>
+
+    <% if (post.isOwner) { %>
+
+        <a href="/edit/<%= post._id %>" class="edit-btn">
+            Edit
+        </a>
+
+        <form action="/delete/<%= post._id %>?_method=DELETE" method="POST" class="inline-delete-form">
+            <button type="submit" class="delete-btn" onclick="return confirm('Delete this post?')">Delete</button>
+        </form>
+
+    <% } %>
+
+</div>
+
+</div>
+
+<% }) %>
+
+    </div>
+
+<%- include("includes/footer") %>

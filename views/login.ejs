@@ -1,0 +1,40 @@
+<%- include("includes/header") %>
+<%- include("includes/nav") %>
+
+<%- include("includes/flash") %>
+
+<div class="form-container auth-container">
+
+    <h1>Welcome Back</h1>
+
+    <form action="/login" method="POST">
+
+        <label>Username or Email</label>
+        <input
+            type="text"
+            name="identifier"
+            placeholder="Enter username or email"
+            required
+        >
+
+        <label>Password</label>
+        <input
+            type="password"
+            name="password"
+            placeholder="Enter your password"
+            required
+        >
+
+        <button type="submit">
+            Log In
+        </button>
+
+    </form>
+
+    <p class="auth-switch">
+        Don't have an account? <a href="/register">Sign up</a>
+    </p>
+
+</div>
+
+<%- include("includes/footer") %>

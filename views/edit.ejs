@@ -1,0 +1,45 @@
+<%- include("includes/header") %>
+
+<%- include("includes/nav") %>
+
+<%- include("includes/flash") %>
+
+<div class="form-container">
+
+<h1>Edit Post</h1>
+
+<form
+action="/edit/<%= post._id %>?_method=PATCH"
+method="POST">
+
+    <label>Title</label>
+    <input
+        type="text"
+        name="title"
+        value="<%= post.title %>"
+        required
+    >
+
+    <label>Content</label>
+    <textarea
+        name="content"
+        rows="8"
+        required
+    ><%= post.content %></textarea>
+
+    <label>Tags (comma separated)</label>
+    <input
+        type="text"
+        name="tags"
+        value="<%= post.tags.join(', ') %>"
+    >
+
+    <button type="submit">
+        Update Post
+    </button>
+
+</form>
+
+</div>
+
+<%- include("includes/footer") %>

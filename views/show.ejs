@@ -1,0 +1,125 @@
+<%- include("includes/header") %>
+<%- include("includes/nav") %>
+
+<%- include("includes/flash") %>
+
+<div class="post-card post-detail">
+
+    <div class="profile">
+
+        <div class="avatar">
+            <%= post.authorAvatar %>
+        </div>
+
+        <div class="profile-info">
+            <h4><%= post.authorName %></h4>
+            <span><%= post.authorRole %></span>
+        </div>
+
+    </div>
+
+    <h1><%= post.title %></h1>
+
+    <p class="post-detail-content">
+        <%= post.content %>
+    </p>
+
+    <div class="tags">
+
+        <% post.tags.forEach(tag => { %>
+
+            <span>#<%= tag %></span>
+
+        <% }) %>
+
+    </div>
+
+    <div class="post-meta-row">
+
+        <form action="/post/<%= post._id %>/like" method="POST" class="like-form">
+            <button type="submit" class="like-btn <%= post.likedByMe ? 'liked' : '' %>" <%= (typeof currentUser === 'undefined' || !currentUser) ? 'disabled title="Log in to like posts"' : '' %>>
+                <%= post.likedByMe ? '♥' : '♡' %> <%= post.likeCount %> <%= post.likeCount === 1 ? 'Like' : 'Likes' %>
+            </button>
+        </form>
+
+    </div>
+
+    <% if (post.isOwner) { %>
+
+        <div class="action-buttons">
+
+            <a href="/edit/<%= post._id %>" class="edit-btn">
+                Edit
+            </a>
+
+            <form action="/delete/<%= post._id %>?_method=DELETE" method="POST" class="inline-delete-form">
+                <button type="submit" class="delete-btn" onclick="return confirm('Delete this post?')">Delete</button>
+            </form>
+
+        </div>
+
+    <% } %>
+
+</div>
+
+<div class="comments-section" id="comments">
+
+    <h3>Comments (<%= comments.length %>)</h3>
+
+    <% if (typeof currentUser !== 'undefined' && currentUser) { %>
+
+        <form action="/post/<%= post._id %>/comments" method="POST" class="comment-form">
+            <textarea name="content" rows="3" placeholder="Add a comment..." required></textarea>
+            <button type="submit">Post Comment</button>
+        </form>
+
+    <% } else { %>
+
+        <p class="comment-login-prompt">
+            <a href="/login">Log in</a> to join the conversation.
+        </p>
+
+    <% } %>
+
+    <div class="comments-list">
+
+        <% if (comments.length === 0) { %>
+
+            <p class="empty-state">No comments yet. Start the discussion!</p>
+
+        <% } %>
+
+        <% comments.forEach(comment => { %>
+
+            <div class="comment-card">
+
+                <div class="comment-header">
+
+                    <div class="avatar comment-avatar"><%= comment.authorAvatar %></div>
+
+                    <div class="comment-meta">
+                        <h5><%= comment.authorName %></h5>
+                        <span class="comment-date"><%= new Date(comment.createdAt).toLocaleDateString() %></span>
+                    </div>
+
+                    <% if (comment.isOwner) { %>
+
+                        <form action="/post/<%= post._id %>/comments/<%= comment._id %>?_method=DELETE" method="POST" class="comment-delete-form">
+                            <button type="submit" class="comment-delete-btn" onclick="return confirm('Delete this comment?')">&times;</button>
+                        </form>
+
+                    <% } %>
+
+                </div>
+
+                <p class="comment-content"><%= comment.content %></p>
+
+            </div>
+
+        <% }) %>
+
+    </div>
+
+</div>
+
+<%- include("includes/footer") %>

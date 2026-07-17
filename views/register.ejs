@@ -1,0 +1,58 @@
+<%- include("includes/header") %>
+<%- include("includes/nav") %>
+
+<%- include("includes/flash") %>
+
+<div class="form-container auth-container">
+
+    <h1>Join DevSphere</h1>
+
+    <form action="/register" method="POST">
+
+        <label>Username</label>
+        <input
+            type="text"
+            name="username"
+            placeholder="Choose a username"
+            minlength="3"
+            maxlength="30"
+            required
+        >
+
+        <label>Email</label>
+        <input
+            type="email"
+            name="email"
+            placeholder="you@example.com"
+            required
+        >
+
+        <label>Role / Title</label>
+        <input
+            type="text"
+            name="role"
+            placeholder="Backend Developer (optional)"
+        >
+
+        <label>Password</label>
+        <input
+            type="password"
+            name="password"
+            placeholder="Create a password"
+            minlength="6"
+            required
+        >
+
+        <button type="submit">
+            Create Account
+        </button>
+
+    </form>
+
+    <p class="auth-switch">
+        Already have an account? <a href="/login">Log in</a>
+    </p>
+
+</div>
+
+<%- include("includes/footer") %>
